@@ -46,7 +46,7 @@ export const COMMENTS: CommentItemProps[] = [
     createdAt: '2022-06-12T17:21:07.5272333Z',
     createdBy: 'Pengfei',
     content:
-      'some list items: \n 1. list one is here \n 2. list two is here \n 3. list three is here',
+      'some list items:\n 1. list one is here \n 2. list two is here \n 3. list three is here',
   },
   {
     createdAt: '2022-06-11T17:21:07.5272333Z',

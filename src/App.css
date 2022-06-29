@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.wmde-markdown.wmde-markdown-color {
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.wmde-markdown-var.w-md-editor {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.wmde-markdown-var.w-md-editor > .w-md-editor-toolbar {
+  background-color: transparent;
+}

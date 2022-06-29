@@ -9,7 +9,7 @@ type Props = {
 
 const CommentItems: FunctionComponent<Props> = ({ items }) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <Box sx={{ display: 'flex', mt: 4, flexDirection: 'column', gap: 4 }}>
       {items.map((item) => (
         <CommentItem key={item.createdAt} {...item} />
       ))}
