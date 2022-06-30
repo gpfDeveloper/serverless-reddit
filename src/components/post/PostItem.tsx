@@ -81,7 +81,7 @@ const PostItem: FunctionComponent<Props> = ({
         </Typography>
         <Typography variant="h5">{title}</Typography>
         {img ? (
-          <Box sx={{ width: 560, height: isDetail ? '100%' : 420 }}>
+          <Box sx={{ maxWidth: 600, height: isDetail ? '100%' : 420 }}>
             <img src={img} alt={title} />
           </Box>
         ) : (

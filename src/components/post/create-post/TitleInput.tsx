@@ -8,8 +8,15 @@ type Props = {
 
 const TitleInput: FunctionComponent<Props> = ({ title, setTitle }) => {
   return (
-    <Box sx={{ position: 'relative', padding: 0, margin: 0 }}>
+    <Box
+      sx={{
+        position: 'relative',
+        padding: 0,
+        margin: 0,
+      }}
+    >
       <TextField
+        fullWidth
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         InputProps={{ style: { paddingRight: '60px' } }}
@@ -17,7 +24,6 @@ const TitleInput: FunctionComponent<Props> = ({ title, setTitle }) => {
         error={title.length > 300}
         variant="outlined"
         placeholder="Title"
-        fullWidth
         color="secondary"
         size="small"
       />

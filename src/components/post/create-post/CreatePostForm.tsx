@@ -11,6 +11,7 @@ import { FunctionComponent, useState } from 'react';
 import ArticleIcon from '@mui/icons-material/Article';
 import ImageIcon from '@mui/icons-material/Image';
 import PostTab from './PostTab';
+import ImageTab from './ImageTab';
 
 const Tabs = styled((props: TabsProps) => <MUITabs {...props} />)({
   border: '1px solid #343536',
@@ -63,7 +64,7 @@ const CreatePostForm: FunctionComponent = () => {
           color="secondary.main"
           sx={{ color: 'secondary.main' }}
         />
-        <Tab icon={<ImageIcon />} iconPosition="start" label="Images" />
+        <Tab icon={<ImageIcon />} iconPosition="start" label="Image" />
       </Tabs>
       <Box sx={{ padding: 2, mt: 1 }}>
         {tab === 0 && (
@@ -74,6 +75,7 @@ const CreatePostForm: FunctionComponent = () => {
             setContent={setContent}
           />
         )}
+        {tab === 1 && <ImageTab title={title} setTitle={setTitle} />}
       </Box>
       <Box sx={{ alignSelf: 'flex-end', mr: 2, mb: 2 }}>
         <Button
