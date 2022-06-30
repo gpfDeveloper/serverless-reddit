@@ -5,6 +5,7 @@ import {
   Tab as MUITab,
   Box,
   Button,
+  Divider,
 } from '@mui/material';
 import type { TabProps, TabsProps } from '@mui/material';
 import { FunctionComponent, useState } from 'react';
@@ -43,6 +44,7 @@ const CreatePostForm: FunctionComponent = () => {
   const [tab, setTab] = useState(0);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState<string | undefined>('');
+  const [img, setImg] = useState<File | undefined>(undefined);
 
   let canSubmit = false;
   if (title.length > 1 && title.length < 301) {
@@ -53,9 +55,10 @@ const CreatePostForm: FunctionComponent = () => {
     if (!canSubmit) return;
     console.log(title);
     console.log(content);
+    console.log(img);
   };
   return (
-    <Paper sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Paper sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Tabs value={tab} onChange={(e, v) => setTab(v)}>
         <Tab
           icon={<ArticleIcon />}
@@ -75,9 +78,17 @@ const CreatePostForm: FunctionComponent = () => {
             setContent={setContent}
           />
         )}
-        {tab === 1 && <ImageTab title={title} setTitle={setTitle} />}
+        {tab === 1 && (
+          <ImageTab
+            title={title}
+            setTitle={setTitle}
+            img={img}
+            setImg={setImg}
+          />
+        )}
       </Box>
-      <Box sx={{ alignSelf: 'flex-end', mr: 2, mb: 2 }}>
+      <Divider />
+      <Box sx={{ alignSelf: 'flex-end', mr: 2, mb: 2, mt: 1 }}>
         <Button
           onClick={submitHandler}
           variant="contained"

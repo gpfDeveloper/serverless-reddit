@@ -6,13 +6,20 @@ import TitleInput from './TitleInput';
 type Props = {
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  img: File | undefined;
+  setImg: React.Dispatch<React.SetStateAction<File | undefined>>;
 };
 
-const ImageTab: FunctionComponent<Props> = ({ title, setTitle }) => {
+const ImageTab: FunctionComponent<Props> = ({
+  title,
+  setTitle,
+  img,
+  setImg,
+}) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <TitleInput title={title} setTitle={setTitle} />
-      <ImgUpload img="" />
+      <ImgUpload img={img} setImg={setImg} />
     </Box>
   );
 };
