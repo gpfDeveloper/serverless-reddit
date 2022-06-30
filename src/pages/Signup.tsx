@@ -146,11 +146,17 @@ const Signup: FunctionComponent = () => {
             )}
           />
 
-          <Button type="submit" fullWidth variant="outlined" size="large">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            size="large"
+            color="secondary"
+          >
             Sign Up
           </Button>
           <Box sx={LINK_STYLE}>
-            {'Aready have an account?'}
+            {'Aready have an account?'} &nbsp;
             <RouterLink to="/login">Log In</RouterLink>
           </Box>
         </Box>

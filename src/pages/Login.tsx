@@ -127,14 +127,20 @@ const Login: FunctionComponent = () => {
             )}
           />
           <Box sx={LINK_STYLE}>
-            <RouterLink to="/forgot_password">Forgot password?</RouterLink>
+            <RouterLink to="/forgot-password">Forgot password?</RouterLink>
           </Box>
 
-          <Button type="submit" fullWidth variant="outlined" size="large">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            size="large"
+            color="secondary"
+          >
             Log In
           </Button>
           <Box sx={LINK_STYLE}>
-            {"Don't have an account? "}
+            {"Don't have an account? "} &nbsp;
             <RouterLink to="/signup">Sign Up</RouterLink>
           </Box>
         </Box>

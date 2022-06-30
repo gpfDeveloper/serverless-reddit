@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuth } from './context/auth-context';
 import SignupConfirm from './pages/SignupConfirm';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const { user } = useAuth();
@@ -17,6 +18,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/signup-confirm" element={<SignupConfirm />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="*" element={<Navigate replace to="/login" />} />
     </Routes>
   );
