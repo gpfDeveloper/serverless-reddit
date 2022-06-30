@@ -10,13 +10,30 @@ type Props = {
 
 const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
   const [previewUrl, setPreviewUrl] = useState('');
-  const previewHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+
+  const createPreview = (files: FileList) => {
     const img = files[0];
     setImg(img);
     const objectUrl = URL.createObjectURL(img);
     setPreviewUrl(objectUrl);
+  };
+  const previewHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    createPreview(files);
+  };
+
+  const dragHandler = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const dropHandler = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (!files) return;
+    createPreview(files);
   };
 
   const removeImgHandler = () => {
@@ -43,6 +60,9 @@ const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
             alignItems: 'center',
             border: '1px dashed #343536',
           }}
+          onDragEnter={dragHandler}
+          onDragOver={dragHandler}
+          onDrop={dropHandler}
         >
           <Typography color="text.secondary" variant="h6">
             Drag and drop image or
