@@ -107,10 +107,11 @@ const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 2,
               }}
             >
               <Box sx={{ height: 100, width: 100 }}>
-                <img src="/hamster.png" alt="hamster" />
+                <img src="/sam.png" alt="hamster" />
               </Box>
               <Typography variant="h6">Drop here to upload</Typography>
             </Box>
