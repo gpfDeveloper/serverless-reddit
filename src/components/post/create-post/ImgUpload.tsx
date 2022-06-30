@@ -122,7 +122,7 @@ const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
           <img src={previewUrl} alt="preview" />
           <IconButton
             onClick={removeImgHandler}
-            sx={{ position: 'absolute', top: 0, right: 0 }}
+            sx={{ position: 'absolute', top: -20, right: -20 }}
           >
             <CancelIcon />
           </IconButton>
