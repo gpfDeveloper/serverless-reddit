@@ -1,10 +1,16 @@
 import { styled } from '@mui/material/styles';
-import { Paper, Tabs as MUITabs, Tab as MUITab } from '@mui/material';
+import {
+  Paper,
+  Tabs as MUITabs,
+  Tab as MUITab,
+  Box,
+  Button,
+} from '@mui/material';
 import type { TabProps, TabsProps } from '@mui/material';
 import { FunctionComponent, useState } from 'react';
 import ArticleIcon from '@mui/icons-material/Article';
 import ImageIcon from '@mui/icons-material/Image';
-import PostForm from './PostForm';
+import PostTab from './PostTab';
 
 const Tabs = styled((props: TabsProps) => <MUITabs {...props} />)({
   border: '1px solid #343536',
@@ -34,8 +40,21 @@ const Tab = styled((props: TabProps) => <MUITab disableRipple {...props} />)(
 
 const CreatePostForm: FunctionComponent = () => {
   const [tab, setTab] = useState(0);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState<string | undefined>('');
+
+  let canSubmit = false;
+  if (title.length > 1 && title.length < 301) {
+    canSubmit = true;
+  }
+
+  const submitHandler = () => {
+    if (!canSubmit) return;
+    console.log(title);
+    console.log(content);
+  };
   return (
-    <Paper>
+    <Paper sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <Tabs value={tab} onChange={(e, v) => setTab(v)}>
         <Tab
           icon={<ArticleIcon />}
@@ -46,7 +65,26 @@ const CreatePostForm: FunctionComponent = () => {
         />
         <Tab icon={<ImageIcon />} iconPosition="start" label="Images" />
       </Tabs>
-      {tab === 0 && <PostForm />}
+      <Box sx={{ padding: 2, mt: 1 }}>
+        {tab === 0 && (
+          <PostTab
+            title={title}
+            setTitle={setTitle}
+            content={content}
+            setContent={setContent}
+          />
+        )}
+      </Box>
+      <Box sx={{ alignSelf: 'flex-end', mr: 2, mb: 2 }}>
+        <Button
+          onClick={submitHandler}
+          variant="contained"
+          color="secondary"
+          sx={{ cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+        >
+          Post
+        </Button>
+      </Box>
     </Paper>
   );
 };
