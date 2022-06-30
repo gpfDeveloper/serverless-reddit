@@ -55,6 +55,7 @@ const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
             minHeight: 280,
             width: '100%',
             display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
             gap: 2,
             justifyContent: 'center',
             alignItems: 'center',

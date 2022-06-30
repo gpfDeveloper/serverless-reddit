@@ -8,7 +8,7 @@ const primaryColor = '#CD3F0B';
 const primaryColorLight = '#FE4500';
 const secondaryColor = '#c2c2c2';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {

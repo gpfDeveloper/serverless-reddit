@@ -51,6 +51,9 @@ const PostItem: FunctionComponent<Props> = ({
         pl: 1,
         gap: 1,
         pb: 0,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'transparent',
         cursor: isDetail ? 'default' : 'pointer',
         '&:hover': hover,
       }}
