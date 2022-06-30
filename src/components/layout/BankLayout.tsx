@@ -1,7 +1,7 @@
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import { FunctionComponent, ReactNode } from 'react';
 import Logo from '../nav/Logo';
-import { theme } from './Layout';
+import theme from '../../theme/theme';
 
 interface Props {
   children: ReactNode;

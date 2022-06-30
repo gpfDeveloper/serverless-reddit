@@ -12,15 +12,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Controller, useForm } from 'react-hook-form';
 import { BankLayout } from '../components/layout/BankLayout';
-
-export const LINK_STYLE = {
-  fontSize: 14,
-  '& a': {
-    color: 'text.secondary',
-    textDecoration: 'underline',
-    fontWeight: 700,
-  },
-};
+import { LINK_STYLE } from '../theme/theme';
+import { useAuth } from '../context/auth-context';
 
 const Login: FunctionComponent = () => {
   const {
@@ -28,7 +21,16 @@ const Login: FunctionComponent = () => {
     handleSubmit,
     control,
   } = useForm();
-  const loginHandler = () => {};
+  const { login } = useAuth();
+  const loginHandler = () => {
+    login();
+  };
+  const loginGoogleHandler = () => {
+    login();
+  };
+  const loginFacebookHandler = () => {
+    login();
+  };
   return (
     <BankLayout>
       <Paper
@@ -53,6 +55,7 @@ const Login: FunctionComponent = () => {
             }}
           >
             <Button
+              onClick={loginGoogleHandler}
               variant="contained"
               fullWidth
               size="large"
@@ -61,6 +64,7 @@ const Login: FunctionComponent = () => {
               Continue with Google
             </Button>
             <Button
+              onClick={loginFacebookHandler}
               variant="contained"
               fullWidth
               size="large"
@@ -72,7 +76,7 @@ const Login: FunctionComponent = () => {
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box sx={{ backgroundColor: '#343536', height: 1.2, flex: 1 }}></Box>
-          <Typography variant="h6" color="text.disabled">
+          <Typography fontWeight={700} color="text.disabled">
             OR
           </Typography>
           <Box sx={{ backgroundColor: '#343536', height: 1.2, flex: 1 }}></Box>
@@ -94,6 +98,7 @@ const Login: FunctionComponent = () => {
             rules={{ required: true }}
             render={({ field }) => (
               <TextField
+                color="secondary"
                 error={Boolean(errors.username)}
                 helperText={errors.username && 'Please enter your name'}
                 fullWidth
@@ -106,12 +111,15 @@ const Login: FunctionComponent = () => {
             name="password"
             defaultValue=""
             control={control}
-            rules={{ required: true }}
+            rules={{ required: true, minLength: 6 }}
             render={({ field }) => (
               <TextField
                 type="password"
+                color="secondary"
                 error={Boolean(errors.password)}
-                helperText={errors.password && 'Please enter your password'}
+                helperText={
+                  errors.password && 'Password should more than 6 charactor'
+                }
                 fullWidth
                 label="Password"
                 {...field}
@@ -127,7 +135,7 @@ const Login: FunctionComponent = () => {
           </Button>
           <Box sx={LINK_STYLE}>
             {"Don't have an account? "}
-            <RouterLink to="/register">Sign Up</RouterLink>
+            <RouterLink to="/signup">Sign Up</RouterLink>
           </Box>
         </Box>
       </Paper>

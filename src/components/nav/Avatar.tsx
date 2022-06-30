@@ -7,9 +7,11 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
+import { useAuth } from '../../context/auth-context';
 
 const Avatar: FunctionComponent = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { logout } = useAuth();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -18,14 +20,14 @@ const Avatar: FunctionComponent = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const logoutHandler = () => {
+    setAnchorElUser(null);
+    logout();
+  };
   return (
     <Box>
       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-        <MuiAvatar
-          alt="Pengfei"
-          src="/"
-          sx={{ backgroundColor: 'primary.main', color: 'white' }}
-        />
+        <MuiAvatar alt="Pengfei" src="/" />
       </IconButton>
       <Menu
         sx={{ mt: '45px' }}
@@ -42,7 +44,7 @@ const Avatar: FunctionComponent = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem onClick={handleCloseUserMenu}>
+        <MenuItem onClick={logoutHandler}>
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>
