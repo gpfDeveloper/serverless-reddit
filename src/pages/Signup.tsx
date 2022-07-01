@@ -24,7 +24,7 @@ type FormValues = {
 
 const Signup: FunctionComponent = () => {
   const [isConfirm, setIsConfirm] = useState(false);
-  const { login } = useAuth();
+  const { login, signUp, confirmSignUp } = useAuth();
   const {
     formState: { errors },
     handleSubmit,
@@ -37,6 +37,7 @@ const Signup: FunctionComponent = () => {
   }) => {
     setIsConfirm(true);
     console.log(username, password, email);
+    signUp(username, email, password);
   };
   const confirmSignupHandler: SubmitHandler<FormValues> = ({
     username,
@@ -44,14 +45,14 @@ const Signup: FunctionComponent = () => {
     password,
     authCode,
   }) => {
-    login();
     console.log(username, password, email, authCode);
+    confirmSignUp(username, authCode, password);
   };
   const signupGoogleHandler = () => {
-    login();
+    // login();
   };
   const signupFacebookHandler = () => {
-    login();
+    // login();
   };
 
   let content = (
@@ -142,14 +143,14 @@ const Signup: FunctionComponent = () => {
           name="password"
           defaultValue=""
           control={control}
-          rules={{ required: true, minLength: 6 }}
+          rules={{ required: true, minLength: 8 }}
           render={({ field }) => (
             <TextField
               type="password"
               color="secondary"
               error={Boolean(errors.password)}
               helperText={
-                errors.password && 'Password should more than 6 charactor'
+                errors.password && 'Password should more than 8 charactor'
               }
               fullWidth
               label="Password"

@@ -4,25 +4,31 @@ import {
   ReactNode,
   useState,
   useContext,
+  useEffect,
 } from 'react';
+import { Auth as AmpAuth, Auth } from 'aws-amplify';
 
 type User = {
-  name: string;
+  username: string;
 } | null;
 
-type Auth = {
+type AuthProps = {
   user: User;
-  login: () => void;
+  signUp: (username: string, email: string, password: string) => void;
+  confirmSignUp: (username: string, authCode: string, password: string) => void;
+  login: (username: string, password: string) => void;
   logout: () => void;
 };
 
-const initialAuth: Auth = {
+const initialAuth: AuthProps = {
   user: null,
-  login: () => {},
-  logout: () => {},
+  signUp: Function,
+  login: Function,
+  logout: Function,
+  confirmSignUp: Function,
 };
 
-const AuthContext = createContext<Auth>(initialAuth);
+const AuthContext = createContext<AuthProps>(initialAuth);
 export default AuthContext;
 
 type Props = {
@@ -31,14 +37,48 @@ type Props = {
 
 export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
   const [user, setUser] = useState<User>(null);
-  const login = () => {
-    setUser({ name: 'Pengfei' });
+
+  const signUp = (username: string, email: string, password: string) => {
+    AmpAuth.signUp({ username, password, attributes: { email } });
+  };
+
+  const confirmSignUp = async (
+    username: string,
+    authCode: string,
+    password: string
+  ) => {
+    await AmpAuth.confirmSignUp(username, authCode);
+    await AmpAuth.signIn(username, password);
+    const curUser = await Auth.currentAuthenticatedUser();
+    setUser(curUser);
+  };
+
+  const login = async (username: string, password: string) => {
+    const curUser = await AmpAuth.signIn(username, password);
+    setUser(curUser);
   };
   const logout = () => {
     setUser(null);
+    AmpAuth.signOut();
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const curUser = await Auth.currentAuthenticatedUser();
+        console.log(curUser);
+        setUser(curUser);
+      } catch (err) {
+        setUser(null);
+      }
+    };
+    checkUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, signUp, confirmSignUp }}
+    >
       {children}
     </AuthContext.Provider>
   );

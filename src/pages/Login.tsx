@@ -6,30 +6,49 @@ import {
   Paper,
   TextField,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Link as RouterLink } from 'react-router-dom';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { BankLayout } from '../components/layout/BankLayout';
 import { LINK_STYLE } from '../theme/theme';
 import { useAuth } from '../context/auth-context';
+
+type FormValues = {
+  username: string;
+  password: string;
+};
 
 const Login: FunctionComponent = () => {
   const {
     formState: { errors },
     handleSubmit,
+    setError,
     control,
-  } = useForm();
+  } = useForm<FormValues>();
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-  const loginHandler = () => {
-    login();
+  const loginHandler: SubmitHandler<FormValues> = async ({
+    username,
+    password,
+  }) => {
+    try {
+      setLoading(true);
+      await login(username, password);
+      setLoading(false);
+    } catch (err: any) {
+      const msg = err?.message || 'Incorrect username or password.';
+      setLoading(false);
+      setError('username', { message: msg });
+    }
   };
   const loginGoogleHandler = () => {
-    login();
+    // login();
   };
   const loginFacebookHandler = () => {
-    login();
+    // login();
   };
   return (
     <BankLayout>
@@ -100,7 +119,10 @@ const Login: FunctionComponent = () => {
               <TextField
                 color="secondary"
                 error={Boolean(errors.username)}
-                helperText={errors.username && 'Please enter your name'}
+                helperText={
+                  errors.username &&
+                  (errors.username.message || 'Please enter your name')
+                }
                 fullWidth
                 label="User Name"
                 {...field}
@@ -111,15 +133,13 @@ const Login: FunctionComponent = () => {
             name="password"
             defaultValue=""
             control={control}
-            rules={{ required: true, minLength: 6 }}
+            rules={{ required: true }}
             render={({ field }) => (
               <TextField
                 type="password"
                 color="secondary"
                 error={Boolean(errors.password)}
-                helperText={
-                  errors.password && 'Password should more than 6 charactor'
-                }
+                helperText={errors.password && 'Please enter your password'}
                 fullWidth
                 label="Password"
                 {...field}
@@ -130,15 +150,22 @@ const Login: FunctionComponent = () => {
             <RouterLink to="/forgot-password">Forgot password?</RouterLink>
           </Box>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            size="large"
-            color="secondary"
-          >
-            Log In
-          </Button>
+          {!loading && (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              color="secondary"
+            >
+              Log In
+            </Button>
+          )}
+          {loading && (
+            <LoadingButton loading variant="outlined" fullWidth size="large">
+              Log In
+            </LoadingButton>
+          )}
           <Box sx={LINK_STYLE}>
             {"Don't have an account? "} &nbsp;
             <RouterLink to="/signup">Sign Up</RouterLink>

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-serverlessreddit-dev-94121-authRole",
+      "UnauthRoleArn": "arn:aws:iam::239344013128:role/amplify-serverlessreddit-dev-94121-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::239344013128:role/amplify-serverlessreddit-dev-94121-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-serverlessreddit-dev-94121-deployment",
+      "UnauthRoleName": "amplify-serverlessreddit-dev-94121-unauthRole",
+      "StackName": "amplify-serverlessreddit-dev-94121",
+      "StackId": "arn:aws:cloudformation:us-east-1:239344013128:stack/amplify-serverlessreddit-dev-94121/eb38a930-f8de-11ec-88e0-0a3a3d7f9873",
+      "AmplifyAppId": "dpcns4z2ra3i7"
+    },
+    "categories": {
+      "auth": {
+        "serverlessreddit3da1923e": {}
+      }
+    }
+  }
+}

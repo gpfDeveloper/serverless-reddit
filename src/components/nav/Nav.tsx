@@ -19,7 +19,7 @@ const Nav: FunctionComponent = () => {
       <Container maxWidth="xl">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Logo />
-          {user && <Avatar />}
+          {user && <Avatar username={user.username} />}
           {!user && (
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
