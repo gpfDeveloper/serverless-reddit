@@ -18,6 +18,8 @@ type AuthProps = {
   confirmSignUp: (username: string, authCode: string, password: string) => void;
   login: (username: string, password: string) => void;
   logout: () => void;
+  forgotPassword: (username: string) => void;
+  resetPassword: (username: string, authCode: string, password: string) => void;
 };
 
 const initialAuth: AuthProps = {
@@ -26,6 +28,8 @@ const initialAuth: AuthProps = {
   login: Function,
   logout: Function,
   confirmSignUp: Function,
+  forgotPassword: Function,
+  resetPassword: Function,
 };
 
 const AuthContext = createContext<AuthProps>(initialAuth);
@@ -48,8 +52,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     password: string
   ) => {
     await AmpAuth.confirmSignUp(username, authCode);
-    await AmpAuth.signIn(username, password);
-    const curUser = await Auth.currentAuthenticatedUser();
+    const curUser = await AmpAuth.signIn(username, password);
     setUser(curUser);
   };
 
@@ -57,9 +60,22 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     const curUser = await AmpAuth.signIn(username, password);
     setUser(curUser);
   };
+
   const logout = () => {
     setUser(null);
     AmpAuth.signOut();
+  };
+
+  const forgotPassword = async (username: string) => {
+    await AmpAuth.forgotPassword(username);
+  };
+
+  const resetPassword = async (
+    username: string,
+    authCode: string,
+    password: string
+  ) => {
+    await Auth.forgotPasswordSubmit(username, authCode, password);
   };
 
   useEffect(() => {
@@ -77,7 +93,15 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, signUp, confirmSignUp }}
+      value={{
+        user,
+        login,
+        logout,
+        signUp,
+        confirmSignUp,
+        forgotPassword,
+        resetPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>
