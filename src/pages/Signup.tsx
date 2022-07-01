@@ -6,6 +6,7 @@ import {
   Paper,
   TextField,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Link as RouterLink } from 'react-router-dom';
 import { FunctionComponent, useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -23,30 +24,48 @@ type FormValues = {
 };
 
 const Signup: FunctionComponent = () => {
+  const [loading, setLoading] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
-  const { login, signUp, confirmSignUp } = useAuth();
+  const { signUp, confirmSignUp } = useAuth();
   const {
     formState: { errors },
     handleSubmit,
     control,
+    setError,
   } = useForm<FormValues>();
-  const signupHandler: SubmitHandler<FormValues> = ({
+  const signupHandler: SubmitHandler<FormValues> = async ({
     username,
     password,
     email,
   }) => {
-    setIsConfirm(true);
-    console.log(username, password, email);
-    signUp(username, email, password);
+    try {
+      setLoading(true);
+      await signUp(username, email, password);
+      setIsConfirm(true);
+      setLoading(false);
+    } catch (err: any) {
+      const msg =
+        err?.message || 'Something goes wrong, please try again later.';
+      setLoading(false);
+      setError('username', { message: msg });
+    }
   };
-  const confirmSignupHandler: SubmitHandler<FormValues> = ({
+  const confirmSignupHandler: SubmitHandler<FormValues> = async ({
     username,
     email,
     password,
     authCode,
   }) => {
-    console.log(username, password, email, authCode);
-    confirmSignUp(username, authCode, password);
+    try {
+      setLoading(true);
+      await confirmSignUp(username, authCode, password);
+      setLoading(false);
+    } catch (err: any) {
+      const msg =
+        err?.message || 'Something goes wrong, please try again later.';
+      setLoading(false);
+      setError('authCode', { message: msg });
+    }
   };
   const signupGoogleHandler = () => {
     // login();
@@ -115,7 +134,10 @@ const Signup: FunctionComponent = () => {
             <TextField
               color="secondary"
               error={Boolean(errors.username)}
-              helperText={errors.username && 'Please enter your name'}
+              helperText={
+                errors.username &&
+                (errors.username.message || 'Please enter your name')
+              }
               fullWidth
               label="User Name"
               {...field}
@@ -159,15 +181,22 @@ const Signup: FunctionComponent = () => {
           )}
         />
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          size="large"
-          color="secondary"
-        >
-          Sign Up
-        </Button>
+        {!loading && (
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            size="large"
+            color="secondary"
+          >
+            Sign Up
+          </Button>
+        )}
+        {loading && (
+          <LoadingButton loading variant="outlined" fullWidth size="large">
+            Sign In
+          </LoadingButton>
+        )}
         <Box sx={LINK_STYLE}>
           {'Aready have an account?'} &nbsp;
           <RouterLink to="/login">Log In</RouterLink>
@@ -181,6 +210,9 @@ const Signup: FunctionComponent = () => {
       <>
         <Typography variant="h6" fontWeight={700}>
           Confirm your account
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Please check your email for the confirmation code.
         </Typography>
         <Divider />
 
@@ -203,7 +235,10 @@ const Signup: FunctionComponent = () => {
               <TextField
                 color="secondary"
                 error={Boolean(errors.authCode)}
-                helperText={errors.authCode && 'Please enter confirmation code'}
+                helperText={
+                  errors.authCode &&
+                  (errors.authCode.message || 'Please enter confirmation code')
+                }
                 fullWidth
                 label="Confirmation Code"
                 {...field}
@@ -211,9 +246,16 @@ const Signup: FunctionComponent = () => {
             )}
           />
 
-          <Button type="submit" fullWidth variant="contained" size="large">
-            Sign Up
-          </Button>
+          {!loading && (
+            <Button type="submit" fullWidth variant="contained" size="large">
+              Sign Up
+            </Button>
+          )}
+          {loading && (
+            <LoadingButton loading variant="outlined" fullWidth size="large">
+              Sign Up
+            </LoadingButton>
+          )}
           <Button
             color="secondary"
             sx={{ alignSelf: 'flex-start' }}

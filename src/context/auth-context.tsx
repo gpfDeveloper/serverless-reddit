@@ -38,8 +38,8 @@ type Props = {
 export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
   const [user, setUser] = useState<User>(null);
 
-  const signUp = (username: string, email: string, password: string) => {
-    AmpAuth.signUp({ username, password, attributes: { email } });
+  const signUp = async (username: string, email: string, password: string) => {
+    await AmpAuth.signUp({ username, password, attributes: { email } });
   };
 
   const confirmSignUp = async (
