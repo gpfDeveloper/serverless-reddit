@@ -10,10 +10,17 @@ import { Link as RouterLink } from 'react-router-dom';
 import { FunctionComponent, useState } from 'react';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { BankLayout } from '../components/layout/BankLayout';
 import { LINK_STYLE } from '../theme/theme';
 import { useAuth } from '../context/auth-context';
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+  authCode: string;
+};
 
 const Signup: FunctionComponent = () => {
   const [isConfirm, setIsConfirm] = useState(false);
@@ -22,12 +29,23 @@ const Signup: FunctionComponent = () => {
     formState: { errors },
     handleSubmit,
     control,
-  } = useForm();
-  const signupHandler = () => {
+  } = useForm<FormValues>();
+  const signupHandler: SubmitHandler<FormValues> = ({
+    username,
+    password,
+    email,
+  }) => {
     setIsConfirm(true);
+    console.log(username, password, email);
   };
-  const confirmSignupHandler = () => {
+  const confirmSignupHandler: SubmitHandler<FormValues> = ({
+    username,
+    email,
+    password,
+    authCode,
+  }) => {
     login();
+    console.log(username, password, email, authCode);
   };
   const signupGoogleHandler = () => {
     login();
@@ -176,15 +194,15 @@ const Signup: FunctionComponent = () => {
           }}
         >
           <Controller
-            name="code"
+            name="authCode"
             defaultValue=""
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
               <TextField
                 color="secondary"
-                error={Boolean(errors.code)}
-                helperText={errors.code && 'Please enter confirmation code'}
+                error={Boolean(errors.authCode)}
+                helperText={errors.authCode && 'Please enter confirmation code'}
                 fullWidth
                 label="Confirmation Code"
                 {...field}
