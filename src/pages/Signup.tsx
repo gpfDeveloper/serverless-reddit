@@ -26,7 +26,8 @@ type FormValues = {
 const Signup: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
-  const { signUp, confirmSignUp } = useAuth();
+  const { signUp, confirmSignUp, loginWithGoogle, loginWithFacebook } =
+    useAuth();
   const {
     formState: { errors },
     handleSubmit,
@@ -68,10 +69,10 @@ const Signup: FunctionComponent = () => {
     }
   };
   const signupGoogleHandler = () => {
-    // login();
+    loginWithGoogle();
   };
   const signupFacebookHandler = () => {
-    // login();
+    loginWithFacebook();
   };
 
   let content = (

@@ -29,7 +29,7 @@ const Login: FunctionComponent = () => {
     control,
   } = useForm<FormValues>();
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, loginWithGoogle, loginWithFacebook } = useAuth();
   const loginHandler: SubmitHandler<FormValues> = async ({
     username,
     password,
@@ -45,10 +45,10 @@ const Login: FunctionComponent = () => {
     }
   };
   const loginGoogleHandler = () => {
-    // login();
+    loginWithGoogle();
   };
   const loginFacebookHandler = () => {
-    // login();
+    loginWithFacebook();
   };
   return (
     <BankLayout>

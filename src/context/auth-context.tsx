@@ -6,7 +6,8 @@ import {
   useContext,
   useEffect,
 } from 'react';
-import { Auth as AmpAuth, Auth } from 'aws-amplify';
+import { Auth as AmpAuth } from 'aws-amplify';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 
 type User = {
   username: string;
@@ -20,6 +21,8 @@ type AuthProps = {
   logout: () => void;
   forgotPassword: (username: string) => void;
   resetPassword: (username: string, authCode: string, password: string) => void;
+  loginWithGoogle: () => void;
+  loginWithFacebook: () => void;
 };
 
 const initialAuth: AuthProps = {
@@ -30,6 +33,8 @@ const initialAuth: AuthProps = {
   confirmSignUp: Function,
   forgotPassword: Function,
   resetPassword: Function,
+  loginWithGoogle: Function,
+  loginWithFacebook: Function,
 };
 
 const AuthContext = createContext<AuthProps>(initialAuth);
@@ -61,6 +66,17 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     setUser(curUser);
   };
 
+  const loginWithGoogle = () =>
+    AmpAuth.federatedSignIn({
+      provider: CognitoHostedUIIdentityProvider.Google,
+    });
+
+  const loginWithFacebook = () => {
+    AmpAuth.federatedSignIn({
+      provider: CognitoHostedUIIdentityProvider.Facebook,
+    });
+  };
+
   const logout = () => {
     setUser(null);
     AmpAuth.signOut();
@@ -75,13 +91,13 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     authCode: string,
     password: string
   ) => {
-    await Auth.forgotPasswordSubmit(username, authCode, password);
+    await AmpAuth.forgotPasswordSubmit(username, authCode, password);
   };
 
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const curUser = await Auth.currentAuthenticatedUser();
+        const curUser = await AmpAuth.currentAuthenticatedUser();
         console.log(curUser);
         setUser(curUser);
       } catch (err) {
@@ -101,6 +117,8 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
         confirmSignUp,
         forgotPassword,
         resetPassword,
+        loginWithGoogle,
+        loginWithFacebook,
       }}
     >
       {children}
