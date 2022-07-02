@@ -1,3 +1,8 @@
+import { API } from 'aws-amplify';
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
+import { useNavigate } from 'react-router-dom';
+import { CreatePostMutation } from '../../../API';
+import { createPost } from '../../../graphql/mutations';
 import { styled } from '@mui/material/styles';
 import {
   Paper,
@@ -8,6 +13,7 @@ import {
   Divider,
 } from '@mui/material';
 import type { TabProps, TabsProps } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { FunctionComponent, useState } from 'react';
 import ArticleIcon from '@mui/icons-material/Article';
 import ImageIcon from '@mui/icons-material/Image';
@@ -41,18 +47,45 @@ const Tab = styled((props: TabProps) => <MUITab disableRipple {...props} />)(
 );
 
 const CreatePostForm: FunctionComponent = () => {
+  const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState<string | undefined>('');
   const [img, setImg] = useState<File | undefined>(undefined);
+
+  const navigate = useNavigate();
 
   let canSubmit = false;
   if (title.length > 1 && title.length < 301) {
     canSubmit = true;
   }
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (!canSubmit) return;
+    setLoading(true);
+    type retType = {
+      data: CreatePostMutation;
+    };
+    let ret: retType;
+    try {
+      if (!img) {
+        ret = (await API.graphql({
+          query: createPost,
+          variables: { input: { title, content } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as retType;
+      } else {
+        ret = (await API.graphql({
+          query: createPost,
+          variables: { input: { title, content } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as retType;
+      }
+      setLoading(false);
+      navigate(`/post/${ret.data.createPost!.id}`);
+    } catch (err) {
+      setLoading(false);
+    }
     console.log(title);
     console.log(content);
     console.log(img);
@@ -89,14 +122,21 @@ const CreatePostForm: FunctionComponent = () => {
       </Box>
       <Divider />
       <Box sx={{ alignSelf: 'flex-end', mr: 2, mb: 2, mt: 1 }}>
-        <Button
-          onClick={submitHandler}
-          variant="contained"
-          color="secondary"
-          sx={{ cursor: canSubmit ? 'pointer' : 'not-allowed' }}
-        >
-          Post
-        </Button>
+        {!loading && (
+          <Button
+            onClick={submitHandler}
+            variant="contained"
+            color="secondary"
+            sx={{ cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+          >
+            Post
+          </Button>
+        )}
+        {loading && (
+          <LoadingButton variant="contained" loading>
+            Post
+          </LoadingButton>
+        )}
       </Box>
     </Paper>
   );

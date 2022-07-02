@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "serverlessreddit",
+  "DynamoDBBillingMode": "PROVISIONED",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authserverlessreddit3da1923e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

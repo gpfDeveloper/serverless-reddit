@@ -9,8 +9,12 @@ import {
 import { Auth as AmpAuth } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 
-type User = {
+export type User = {
   username: string;
+  attributes: {
+    name: string;
+    picture: string;
+  };
 } | null;
 
 type AuthProps = {

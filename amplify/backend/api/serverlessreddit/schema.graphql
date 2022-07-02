@@ -1,0 +1,41 @@
+type Post
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: owner, operations: [create, update, delete, read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  content: String
+  image: String
+  votes: [Vote] @hasMany
+  comments: [Comment] @hasMany
+}
+
+type Comment
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: owner, operations: [create, update, delete, read] }
+    ]
+  ) {
+  id: ID!
+  post: Post @belongsTo
+  content: String!
+}
+
+type Vote
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: owner, operations: [create, update, delete, read] }
+    ]
+  ) {
+  id: ID!
+  post: Post @belongsTo
+  vote: Int!
+}

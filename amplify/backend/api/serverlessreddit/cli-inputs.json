@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "serverlessreddit",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/pengfeigao/git/aws/serverless-reddit/amplify/backend/api/serverlessreddit/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authserverlessreddit3da1923e"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 365,
+        "apiKeyExpirationDate": "2023-07-02T03:41:00.895Z",
+        "keyDescription": "serverlessRedditAmplify"
+      }
+    ]
+  }
+}
