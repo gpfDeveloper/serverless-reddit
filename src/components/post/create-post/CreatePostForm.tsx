@@ -1,4 +1,5 @@
-import { API } from 'aws-amplify';
+import { v4 as uuid } from 'uuid';
+import { API, Storage } from 'aws-amplify';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 import { useNavigate } from 'react-router-dom';
 import { CreatePostMutation } from '../../../API';
@@ -75,9 +76,11 @@ const CreatePostForm: FunctionComponent = () => {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as retType;
       } else {
+        const imgPath = uuid();
+        await Storage.put(imgPath, img, { contentType: img.type });
         ret = (await API.graphql({
           query: createPost,
-          variables: { input: { title, content } },
+          variables: { input: { title, content, image: imgPath } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as retType;
       }

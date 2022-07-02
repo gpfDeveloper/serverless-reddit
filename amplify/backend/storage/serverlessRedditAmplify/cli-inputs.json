@@ -1,0 +1,15 @@
+{
+  "resourceName": "serverlessRedditAmplify",
+  "policyUUID": "ae188dfb",
+  "bucketName": "serverlessreddit563dee67913a4d509061cf9278ec9dd",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "groupAccess": {}
+}

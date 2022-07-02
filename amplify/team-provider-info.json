@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "serverlessreddit3da1923e": {}
+        "serverlessreddit3da1923e": {},
+        "true": {}
       }
     }
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Button, IconButton } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -23,6 +23,13 @@ const ImgUpload: FunctionComponent<Props> = ({ img, setImg }) => {
     if (!files) return;
     createPreview(files);
   };
+
+  useEffect(() => {
+    if (img) {
+      const objectUrl = URL.createObjectURL(img);
+      setPreviewUrl(objectUrl);
+    }
+  }, [img]);
 
   const dragHandler = (e: React.DragEvent) => {
     e.preventDefault();
