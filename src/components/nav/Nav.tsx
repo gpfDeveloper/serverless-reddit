@@ -1,4 +1,12 @@
-import { AppBar, Toolbar, Container, Button, Box } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Container,
+  Button,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Logo from './Logo';
 import Avatar from './Avatar';
 import { FunctionComponent } from 'react';
@@ -6,6 +14,8 @@ import { useAuth } from '../../context/auth-context';
 import { useNavigate } from 'react-router-dom';
 
 const Nav: FunctionComponent = () => {
+  const theme = useTheme();
+  const isBelowSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { user } = useAuth();
   const navigate = useNavigate();
   const loginHandler = () => {
@@ -20,7 +30,7 @@ const Nav: FunctionComponent = () => {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Logo />
           {user && <Avatar user={user} />}
-          {!user && (
+          {!user && !isBelowSm && (
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
                 variant="outlined"
@@ -37,6 +47,16 @@ const Nav: FunctionComponent = () => {
                 Sign Up
               </Button>
             </Box>
+          )}
+          {!user && isBelowSm && (
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={loginHandler}
+            >
+              Log In or Sign Up
+            </Button>
           )}
         </Toolbar>
       </Container>

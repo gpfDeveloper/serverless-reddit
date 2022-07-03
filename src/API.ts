@@ -5,12 +5,14 @@
 export type CreatePostInput = {
   id?: string | null,
   title: string,
+  username: string,
   content?: string | null,
   image?: string | null,
 };
 
 export type ModelPostConditionInput = {
   title?: ModelStringInput | null,
+  username?: ModelStringInput | null,
   content?: ModelStringInput | null,
   image?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
@@ -62,6 +64,7 @@ export type Post = {
   __typename: "Post",
   id: string,
   title: string,
+  username: string,
   content?: string | null,
   image?: string | null,
   votes?: ModelVoteConnection | null,
@@ -97,6 +100,7 @@ export type ModelCommentConnection = {
 export type Comment = {
   __typename: "Comment",
   id: string,
+  username: string,
   post?: Post | null,
   content: string,
   createdAt: string,
@@ -108,6 +112,7 @@ export type Comment = {
 export type UpdatePostInput = {
   id: string,
   title?: string | null,
+  username?: string | null,
   content?: string | null,
   image?: string | null,
 };
@@ -118,11 +123,13 @@ export type DeletePostInput = {
 
 export type CreateCommentInput = {
   id?: string | null,
+  username: string,
   content: string,
   postCommentsId?: string | null,
 };
 
 export type ModelCommentConditionInput = {
+  username?: ModelStringInput | null,
   content?: ModelStringInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
   or?: Array< ModelCommentConditionInput | null > | null,
@@ -148,6 +155,7 @@ export type ModelIDInput = {
 
 export type UpdateCommentInput = {
   id: string,
+  username?: string | null,
   content?: string | null,
   postCommentsId?: string | null,
 };
@@ -195,6 +203,7 @@ export type DeleteVoteInput = {
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  username?: ModelStringInput | null,
   content?: ModelStringInput | null,
   image?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
@@ -210,6 +219,7 @@ export type ModelPostConnection = {
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
+  username?: ModelStringInput | null,
   content?: ModelStringInput | null,
   and?: Array< ModelCommentFilterInput | null > | null,
   or?: Array< ModelCommentFilterInput | null > | null,
@@ -236,6 +246,7 @@ export type CreatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -262,6 +273,7 @@ export type UpdatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -288,6 +300,7 @@ export type DeletePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -313,10 +326,12 @@ export type CreateCommentMutation = {
   createComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -340,10 +355,12 @@ export type UpdateCommentMutation = {
   updateComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -367,10 +384,12 @@ export type DeleteCommentMutation = {
   deleteComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -398,6 +417,7 @@ export type CreateVoteMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -425,6 +445,7 @@ export type UpdateVoteMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -452,6 +473,7 @@ export type DeleteVoteMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -475,6 +497,7 @@ export type GetPostQuery = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -504,6 +527,7 @@ export type ListPostsQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -522,10 +546,12 @@ export type GetCommentQuery = {
   getComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -552,6 +578,7 @@ export type ListCommentsQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
+      username: string,
       content: string,
       createdAt: string,
       updatedAt: string,
@@ -574,6 +601,7 @@ export type GetVoteQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -619,6 +647,7 @@ export type OnCreatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -644,6 +673,7 @@ export type OnUpdatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -669,6 +699,7 @@ export type OnDeletePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    username: string,
     content?: string | null,
     image?: string | null,
     votes?:  {
@@ -693,10 +724,12 @@ export type OnCreateCommentSubscription = {
   onCreateComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -719,10 +752,12 @@ export type OnUpdateCommentSubscription = {
   onUpdateComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -745,10 +780,12 @@ export type OnDeleteCommentSubscription = {
   onDeleteComment?:  {
     __typename: "Comment",
     id: string,
+    username: string,
     post?:  {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -775,6 +812,7 @@ export type OnCreateVoteSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -801,6 +839,7 @@ export type OnUpdateVoteSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,
@@ -827,6 +866,7 @@ export type OnDeleteVoteSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      username: string,
       content?: string | null,
       image?: string | null,
       createdAt: string,

@@ -7,6 +7,7 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost(owner: $owner) {
       id
       title
+      username
       content
       image
       votes {
@@ -26,6 +27,7 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost(owner: $owner) {
       id
       title
+      username
       content
       image
       votes {
@@ -45,6 +47,7 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost(owner: $owner) {
       id
       title
+      username
       content
       image
       votes {
@@ -63,9 +66,11 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment($owner: String) {
     onCreateComment(owner: $owner) {
       id
+      username
       post {
         id
         title
+        username
         content
         image
         createdAt
@@ -84,9 +89,11 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment($owner: String) {
     onUpdateComment(owner: $owner) {
       id
+      username
       post {
         id
         title
+        username
         content
         image
         createdAt
@@ -105,9 +112,11 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment($owner: String) {
     onDeleteComment(owner: $owner) {
       id
+      username
       post {
         id
         title
+        username
         content
         image
         createdAt
@@ -129,6 +138,7 @@ export const onCreateVote = /* GraphQL */ `
       post {
         id
         title
+        username
         content
         image
         createdAt
@@ -150,6 +160,7 @@ export const onUpdateVote = /* GraphQL */ `
       post {
         id
         title
+        username
         content
         image
         createdAt
@@ -171,6 +182,7 @@ export const onDeleteVote = /* GraphQL */ `
       post {
         id
         title
+        username
         content
         image
         createdAt

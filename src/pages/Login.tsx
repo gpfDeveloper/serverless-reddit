@@ -9,12 +9,11 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Link as RouterLink } from 'react-router-dom';
 import { FunctionComponent, useState } from 'react';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { BankLayout } from '../components/layout/BankLayout';
 import { LINK_STYLE } from '../theme/theme';
 import { useAuth } from '../context/auth-context';
+import SocialSignIn from '../components/social-signIn/SocialSignIn';
 
 type FormValues = {
   username: string;
@@ -29,7 +28,7 @@ const Login: FunctionComponent = () => {
     control,
   } = useForm<FormValues>();
   const [loading, setLoading] = useState(false);
-  const { login, loginWithGoogle, loginWithFacebook } = useAuth();
+  const { login } = useAuth();
   const loginHandler: SubmitHandler<FormValues> = async ({
     username,
     password,
@@ -43,12 +42,6 @@ const Login: FunctionComponent = () => {
       setLoading(false);
       setError('username', { message: msg });
     }
-  };
-  const loginGoogleHandler = () => {
-    loginWithGoogle();
-  };
-  const loginFacebookHandler = () => {
-    loginWithFacebook();
   };
   return (
     <BankLayout>
@@ -65,34 +58,8 @@ const Login: FunctionComponent = () => {
           Log In
         </Typography>
         <Divider />
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-            }}
-          >
-            <Button
-              onClick={loginGoogleHandler}
-              variant="contained"
-              fullWidth
-              size="large"
-              startIcon={<GoogleIcon />}
-            >
-              Continue with Google
-            </Button>
-            <Button
-              onClick={loginFacebookHandler}
-              variant="contained"
-              fullWidth
-              size="large"
-              startIcon={<FacebookIcon />}
-            >
-              Continue with Facebook
-            </Button>
-          </Box>
-        </Box>
+
+        <SocialSignIn />
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box sx={{ backgroundColor: '#343536', height: 1.2, flex: 1 }}></Box>
           <Typography fontWeight={700} color="text.disabled">

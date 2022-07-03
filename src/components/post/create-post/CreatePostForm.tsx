@@ -20,6 +20,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import ImageIcon from '@mui/icons-material/Image';
 import PostTab from './PostTab';
 import ImageTab from './ImageTab';
+import { useAuth } from '../../../context/auth-context';
 
 const Tabs = styled((props: TabsProps) => <MUITabs {...props} />)({
   border: '1px solid #343536',
@@ -48,6 +49,7 @@ const Tab = styled((props: TabProps) => <MUITab disableRipple {...props} />)(
 );
 
 const CreatePostForm: FunctionComponent = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(0);
   const [title, setTitle] = useState('');
@@ -72,7 +74,7 @@ const CreatePostForm: FunctionComponent = () => {
       if (!img) {
         ret = (await API.graphql({
           query: createPost,
-          variables: { input: { title, content } },
+          variables: { input: { title, username: user!.username, content } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as retType;
       } else {
@@ -80,7 +82,9 @@ const CreatePostForm: FunctionComponent = () => {
         await Storage.put(imgPath, img, { contentType: img.type });
         ret = (await API.graphql({
           query: createPost,
-          variables: { input: { title, content, image: imgPath } },
+          variables: {
+            input: { title, content, username: user!.username, image: imgPath },
+          },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as retType;
       }
@@ -89,9 +93,6 @@ const CreatePostForm: FunctionComponent = () => {
     } catch (err) {
       setLoading(false);
     }
-    console.log(title);
-    console.log(content);
-    console.log(img);
   };
   return (
     <Paper sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

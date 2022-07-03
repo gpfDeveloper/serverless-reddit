@@ -70,15 +70,24 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     setUser(curUser);
   };
 
-  const loginWithGoogle = () =>
-    AmpAuth.federatedSignIn({
+  const loginWithGoogle = async () => {
+    await AmpAuth.federatedSignIn({
       provider: CognitoHostedUIIdentityProvider.Google,
     });
+    const curUser = await AmpAuth.currentAuthenticatedUser();
+    curUser.username = curUser.attributes.name || curUser.username;
+    console.log(curUser);
+    setUser(curUser);
+  };
 
-  const loginWithFacebook = () => {
-    AmpAuth.federatedSignIn({
+  const loginWithFacebook = async () => {
+    await AmpAuth.federatedSignIn({
       provider: CognitoHostedUIIdentityProvider.Facebook,
     });
+    const curUser = await AmpAuth.currentAuthenticatedUser();
+    curUser.username = curUser.attributes.name || curUser.username;
+    console.log(curUser);
+    setUser(curUser);
   };
 
   const logout = () => {
@@ -102,6 +111,9 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     const checkUser = async () => {
       try {
         const curUser = await AmpAuth.currentAuthenticatedUser();
+        if (curUser.attributes?.name) {
+          curUser.username = curUser.attributes.name;
+        }
         console.log(curUser);
         setUser(curUser);
       } catch (err) {

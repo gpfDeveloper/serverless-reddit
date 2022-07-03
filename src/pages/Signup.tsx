@@ -9,12 +9,11 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Link as RouterLink } from 'react-router-dom';
 import { FunctionComponent, useState } from 'react';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { BankLayout } from '../components/layout/BankLayout';
 import { LINK_STYLE } from '../theme/theme';
 import { useAuth } from '../context/auth-context';
+import SocialSignIn from '../components/social-signIn/SocialSignIn';
 
 type FormValues = {
   username: string;
@@ -26,8 +25,7 @@ type FormValues = {
 const Signup: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
-  const { signUp, confirmSignUp, loginWithGoogle, loginWithFacebook } =
-    useAuth();
+  const { signUp, confirmSignUp } = useAuth();
   const {
     formState: { errors },
     handleSubmit,
@@ -68,12 +66,6 @@ const Signup: FunctionComponent = () => {
       setError('authCode', { message: msg });
     }
   };
-  const signupGoogleHandler = () => {
-    loginWithGoogle();
-  };
-  const signupFacebookHandler = () => {
-    loginWithFacebook();
-  };
 
   let content = (
     <>
@@ -81,34 +73,7 @@ const Signup: FunctionComponent = () => {
         Sign Up
       </Typography>
       <Divider />
-      <Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-          }}
-        >
-          <Button
-            onClick={signupGoogleHandler}
-            variant="contained"
-            fullWidth
-            size="large"
-            startIcon={<GoogleIcon />}
-          >
-            Continue with Google
-          </Button>
-          <Button
-            onClick={signupFacebookHandler}
-            variant="contained"
-            fullWidth
-            size="large"
-            startIcon={<FacebookIcon />}
-          >
-            Continue with Facebook
-          </Button>
-        </Box>
-      </Box>
+      <SocialSignIn />
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <Box sx={{ backgroundColor: '#343536', height: 1.2, flex: 1 }}></Box>
         <Typography fontWeight={700} color="text.disabled">
