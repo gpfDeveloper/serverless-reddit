@@ -1,18 +1,16 @@
 import MDEditor from '@uiw/react-md-editor';
 import { Box, Card, IconButton, Typography } from '@mui/material';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { PostItemProps } from '../../types/post';
 import ReactTimeAgo from 'react-time-ago';
-import { FunctionComponent, MouseEvent } from 'react';
+import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Vote from './vote/Vote';
 
 type Props = PostItemProps & { isDetail?: boolean };
 
 const PostItem: FunctionComponent<Props> = ({
   id,
-  vote,
   createdBy,
   createdAt,
   title,
@@ -21,12 +19,6 @@ const PostItem: FunctionComponent<Props> = ({
   img,
   isDetail = false,
 }) => {
-  let _vote;
-  if (vote === 0) {
-    _vote = 'Vote';
-  } else {
-    _vote = vote.toString();
-  }
   const navigate = useNavigate();
   const hover = isDetail
     ? {}
@@ -35,13 +27,6 @@ const PostItem: FunctionComponent<Props> = ({
   const onClickCard = () => {
     if (isDetail) return;
     navigate(`/post/${id}`);
-  };
-
-  const onUpVote = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-  };
-  const onDownVote = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
   };
 
   return (
@@ -62,21 +47,12 @@ const PostItem: FunctionComponent<Props> = ({
     >
       <Box
         sx={{
-          display: { xs: 'none', lg: 'flex' },
+          display: { xs: 'none', sm: 'flex' },
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <IconButton onClick={onUpVote}>
-          <ArrowDropUpIcon fontSize="large" sx={{ color: 'text.secondary' }} />
-        </IconButton>
-        <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{_vote}</Typography>
-        <IconButton onClick={onDownVote}>
-          <ArrowDropDownIcon
-            fontSize="large"
-            sx={{ color: 'text.secondary' }}
-          />
-        </IconButton>
+        <Vote />
       </Box>
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Typography variant="caption" color="text.disabled">
@@ -100,26 +76,12 @@ const PostItem: FunctionComponent<Props> = ({
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Box
             sx={{
-              display: { xs: 'flex', lg: 'none' },
+              display: { xs: 'flex', sm: 'none' },
               gap: 1,
               alignItems: 'center',
             }}
           >
-            <IconButton onClick={onUpVote} sx={{ padding: 0 }}>
-              <ArrowDropUpIcon
-                fontSize="large"
-                sx={{ color: 'text.secondary' }}
-              />
-            </IconButton>
-            <Typography sx={{ fontWeight: 700, fontSize: 14 }}>
-              {_vote}
-            </Typography>
-            <IconButton onClick={onDownVote} sx={{ padding: 0 }}>
-              <ArrowDropDownIcon
-                fontSize="large"
-                sx={{ color: 'text.secondary' }}
-              />
-            </IconButton>
+            <Vote />
           </Box>
           <Box>
             <IconButton

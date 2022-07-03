@@ -12,6 +12,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 export type User = {
   username: string;
   attributes: {
+    sub: string;
     name: string;
     picture: string;
   };

@@ -26,14 +26,9 @@ const Home: FunctionComponent = () => {
         authMode: 'API_KEY',
       })) as { data: ListPostsQuery };
       for (const post of ret.data.listPosts!.items) {
-        const vote = post!.votes!.items.reduce(
-          (pre, cur) => pre + cur!.vote,
-          0
-        );
         const postItem: PostItemProps = {
           id: post!.id,
           title: post!.title,
-          vote,
           createdBy: post!.username,
           createdAt: post!.createdAt,
           content: post!.content || '',
