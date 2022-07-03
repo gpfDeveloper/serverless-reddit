@@ -1,3 +1,4 @@
+import MDEditor from '@uiw/react-md-editor';
 import { Box, Card, IconButton, Typography } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -88,9 +89,13 @@ const PostItem: FunctionComponent<Props> = ({
             <img src={img} alt={title} />
           </Box>
         ) : (
-          <Typography color="text.secondary">
-            {isDetail ? content : content.substring(0, 200)}
-          </Typography>
+          <Box color="text.secondary">
+            {isDetail ? (
+              <MDEditor.Markdown source={content} />
+            ) : (
+              <MDEditor.Markdown source={content.substring(0, 200)} />
+            )}
+          </Box>
         )}
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Box

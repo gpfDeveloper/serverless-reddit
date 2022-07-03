@@ -11,9 +11,46 @@ export const onCreatePost = /* GraphQL */ `
       content
       image
       votes {
+        items {
+          id
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          vote
+          createdAt
+          updatedAt
+          postVotesId
+          owner
+        }
         nextToken
       }
       comments {
+        items {
+          id
+          username
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          owner
+        }
         nextToken
       }
       createdAt
@@ -31,9 +68,46 @@ export const onUpdatePost = /* GraphQL */ `
       content
       image
       votes {
+        items {
+          id
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          vote
+          createdAt
+          updatedAt
+          postVotesId
+          owner
+        }
         nextToken
       }
       comments {
+        items {
+          id
+          username
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          owner
+        }
         nextToken
       }
       createdAt
@@ -51,9 +125,46 @@ export const onDeletePost = /* GraphQL */ `
       content
       image
       votes {
+        items {
+          id
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          vote
+          createdAt
+          updatedAt
+          postVotesId
+          owner
+        }
         nextToken
       }
       comments {
+        items {
+          id
+          username
+          post {
+            id
+            title
+            username
+            content
+            image
+            createdAt
+            updatedAt
+            owner
+          }
+          content
+          createdAt
+          updatedAt
+          postCommentsId
+          owner
+        }
         nextToken
       }
       createdAt
@@ -73,6 +184,29 @@ export const onCreateComment = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -96,6 +230,29 @@ export const onUpdateComment = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -119,6 +276,29 @@ export const onDeleteComment = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -141,6 +321,29 @@ export const onCreateVote = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -163,6 +366,29 @@ export const onUpdateVote = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -185,6 +411,29 @@ export const onDeleteVote = /* GraphQL */ `
         username
         content
         image
+        votes {
+          items {
+            id
+            vote
+            createdAt
+            updatedAt
+            postVotesId
+            owner
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            username
+            content
+            createdAt
+            updatedAt
+            postCommentsId
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
