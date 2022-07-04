@@ -46,11 +46,11 @@ const PostDetail: FunctionComponent = () => {
 
   return (
     <Layout>
-      {!loading && postItem && (
+      {!loading && postItem && id && (
         <>
           <PostItem {...postItem} isDetail={true} />
           <Box sx={{ mt: 1 }}>
-            <Comment />
+            <Comment postId={id} />
           </Box>
         </>
       )}

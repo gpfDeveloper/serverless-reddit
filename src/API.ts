@@ -260,6 +260,31 @@ export type ListVotesPerPostQuery = {
   } | null,
 };
 
+export type ListCommentsPerPostQueryVariables = {
+  id: string,
+};
+
+export type ListCommentsPerPostQuery = {
+  getPost?:  {
+    __typename: "Post",
+    title: string,
+    comments?:  {
+      __typename: "ModelCommentConnection",
+      items:  Array< {
+        __typename: "Comment",
+        id: string,
+        username: string,
+        content: string,
+        createdAt: string,
+        updatedAt: string,
+        postCommentsId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+  } | null,
+};
+
 export type CreatePostMutationVariables = {
   input: CreatePostInput,
   condition?: ModelPostConditionInput | null,
