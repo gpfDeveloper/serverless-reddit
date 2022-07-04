@@ -15,8 +15,9 @@ const PostItem: FunctionComponent<Props> = ({
   createdAt,
   title,
   content,
-  numOfComments,
+  comments,
   img,
+  votes,
   isDetail = false,
 }) => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const PostItem: FunctionComponent<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Vote />
+        <Vote postId={id} />
       </Box>
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Typography variant="caption" color="text.disabled">
@@ -65,13 +66,15 @@ const PostItem: FunctionComponent<Props> = ({
             <img src={img} alt={title} />
           </Box>
         ) : (
-          <Box color="text.secondary">
-            {isDetail ? (
-              <MDEditor.Markdown source={content} />
-            ) : (
-              <MDEditor.Markdown source={content.substring(0, 200)} />
-            )}
-          </Box>
+          content && (
+            <Box color="text.secondary">
+              {isDetail ? (
+                <MDEditor.Markdown source={content} />
+              ) : (
+                <MDEditor.Markdown source={content.substring(0, 200)} />
+              )}
+            </Box>
+          )
         )}
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Box
@@ -81,7 +84,7 @@ const PostItem: FunctionComponent<Props> = ({
               alignItems: 'center',
             }}
           >
-            <Vote />
+            <Vote postId={id} />
           </Box>
           <Box>
             <IconButton
@@ -95,7 +98,7 @@ const PostItem: FunctionComponent<Props> = ({
             >
               <ChatBubbleOutlineIcon sx={{ color: 'text.secondary' }} />
               <Typography variant="body2" color="text.disabled">
-                {numOfComments} Comments
+                {comments?.length} Comments
               </Typography>
             </IconButton>
           </Box>

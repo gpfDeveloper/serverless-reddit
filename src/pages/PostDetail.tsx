@@ -25,15 +25,14 @@ const PostDetail: FunctionComponent = () => {
       })) as { data: GetPostQuery };
 
       const post = ret.data!.getPost;
-      const vote = post!.votes!.items.reduce((pre, cur) => pre + cur!.vote, 0);
       const _postItem: PostItemProps = {
         id: post!.id,
         title: post!.title,
-        vote,
+        votes: post!.votes!.items,
         createdBy: post!.username,
         createdAt: post!.createdAt,
         content: post!.content || '',
-        numOfComments: post!.comments!.items.length,
+        comments: post!.comments!.items,
       };
       if (post!.image) {
         _postItem.img = await Storage.get(post!.image);

@@ -11,6 +11,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 
 export type User = {
   username: string;
+  id: string;
   attributes: {
     sub: string;
     name: string;
@@ -68,6 +69,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
 
   const login = async (username: string, password: string) => {
     const curUser = await AmpAuth.signIn(username, password);
+    curUser.id = curUser.username;
     setUser(curUser);
   };
 
@@ -76,6 +78,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
       provider: CognitoHostedUIIdentityProvider.Google,
     });
     const curUser = await AmpAuth.currentAuthenticatedUser();
+    curUser.id = curUser.username;
     curUser.username = curUser.attributes.name || curUser.username;
     console.log(curUser);
     setUser(curUser);
@@ -86,6 +89,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
       provider: CognitoHostedUIIdentityProvider.Facebook,
     });
     const curUser = await AmpAuth.currentAuthenticatedUser();
+    curUser.id = curUser.username;
     curUser.username = curUser.attributes.name || curUser.username;
     console.log(curUser);
     setUser(curUser);
@@ -112,6 +116,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     const checkUser = async () => {
       try {
         const curUser = await AmpAuth.currentAuthenticatedUser();
+        curUser.id = curUser.username;
         if (curUser.attributes?.name) {
           curUser.username = curUser.attributes.name;
         }

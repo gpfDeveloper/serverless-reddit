@@ -2,6 +2,55 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+export type Post = {
+  __typename: "Post",
+  id: string,
+  title: string,
+  username: string,
+  content?: string | null,
+  image?: string | null,
+  votes?: ModelVoteConnection | null,
+  comments?: ModelCommentConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type ModelVoteConnection = {
+  __typename: "ModelVoteConnection",
+  items:  Array<Vote | null >,
+  nextToken?: string | null,
+};
+
+export type Vote = {
+  __typename: "Vote",
+  id: string,
+  post?: Post | null,
+  vote: number,
+  createdAt: string,
+  updatedAt: string,
+  postVotesId?: string | null,
+  owner?: string | null,
+};
+
+export type ModelCommentConnection = {
+  __typename: "ModelCommentConnection",
+  items:  Array<Comment | null >,
+  nextToken?: string | null,
+};
+
+export type Comment = {
+  __typename: "Comment",
+  id: string,
+  username: string,
+  post?: Post | null,
+  content: string,
+  createdAt: string,
+  updatedAt: string,
+  postCommentsId?: string | null,
+  owner?: string | null,
+};
+
 export type CreatePostInput = {
   id?: string | null,
   title: string,
@@ -58,55 +107,6 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
-};
-
-export type Post = {
-  __typename: "Post",
-  id: string,
-  title: string,
-  username: string,
-  content?: string | null,
-  image?: string | null,
-  votes?: ModelVoteConnection | null,
-  comments?: ModelCommentConnection | null,
-  createdAt: string,
-  updatedAt: string,
-  owner?: string | null,
-};
-
-export type ModelVoteConnection = {
-  __typename: "ModelVoteConnection",
-  items:  Array<Vote | null >,
-  nextToken?: string | null,
-};
-
-export type Vote = {
-  __typename: "Vote",
-  id: string,
-  post?: Post | null,
-  vote: number,
-  createdAt: string,
-  updatedAt: string,
-  postVotesId?: string | null,
-  owner?: string | null,
-};
-
-export type ModelCommentConnection = {
-  __typename: "ModelCommentConnection",
-  items:  Array<Comment | null >,
-  nextToken?: string | null,
-};
-
-export type Comment = {
-  __typename: "Comment",
-  id: string,
-  username: string,
-  post?: Post | null,
-  content: string,
-  createdAt: string,
-  updatedAt: string,
-  postCommentsId?: string | null,
-  owner?: string | null,
 };
 
 export type UpdatePostInput = {
@@ -234,6 +234,30 @@ export type ModelVoteFilterInput = {
   or?: Array< ModelVoteFilterInput | null > | null,
   not?: ModelVoteFilterInput | null,
   postVotesId?: ModelIDInput | null,
+};
+
+export type ListVotesPerPostQueryVariables = {
+  id: string,
+};
+
+export type ListVotesPerPostQuery = {
+  getPost?:  {
+    __typename: "Post",
+    title: string,
+    votes?:  {
+      __typename: "ModelVoteConnection",
+      items:  Array< {
+        __typename: "Vote",
+        id: string,
+        vote: number,
+        createdAt: string,
+        updatedAt: string,
+        postVotesId?: string | null,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+  } | null,
 };
 
 export type CreatePostMutationVariables = {

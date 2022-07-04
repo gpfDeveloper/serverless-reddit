@@ -25,6 +25,7 @@ const Home: FunctionComponent = () => {
         query: listPosts,
         authMode: 'API_KEY',
       })) as { data: ListPostsQuery };
+      console.log(ret);
       for (const post of ret.data.listPosts!.items) {
         const postItem: PostItemProps = {
           id: post!.id,
@@ -32,7 +33,8 @@ const Home: FunctionComponent = () => {
           createdBy: post!.username,
           createdAt: post!.createdAt,
           content: post!.content || '',
-          numOfComments: post!.comments!.items.length,
+          comments: post!.comments!.items,
+          votes: post!.votes!.items,
         };
         if (post!.image) {
           postItem.img = await Storage.get(post!.image);

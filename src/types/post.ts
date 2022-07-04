@@ -3,11 +3,9 @@ export type PostItemProps = {
   createdBy: string;
   createdAt: string;
   title: string;
-  content: string;
+  content?: string;
   votes?: any[];
   comments?: any[];
-  numOfComments?: number;
-  vote?: number;
   img?: string;
 };
 
@@ -15,4 +13,9 @@ export type CommentItemProps = {
   createdAt: string;
   createdBy: string;
   content: string;
+};
+
+export type VoteItemProps = {
+  id: string;
+  vote: number;
 };
