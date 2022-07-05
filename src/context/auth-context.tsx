@@ -12,11 +12,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 export type User = {
   username: string;
   id: string;
-  attributes: {
-    sub: string;
-    name: string;
-    picture: string;
-  };
+  picture: string;
 } | null;
 
 type AuthProps = {
@@ -53,6 +49,34 @@ type Props = {
 export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
   const [user, setUser] = useState<User>(null);
 
+  const initiateUser = async () => {
+    try {
+      const curUser = await AmpAuth.currentAuthenticatedUser();
+      const _user: User = {
+        id: curUser.username,
+        username: curUser.username,
+        picture: '/',
+      };
+      if (curUser.attributes.name) {
+        _user.username = curUser.attributes.name;
+      }
+      if (curUser.attributes.identities) {
+        const identity = JSON.parse(curUser.attributes.identities)[0];
+        if (identity.providerType === 'Google') {
+          _user.picture = curUser.attributes.picture;
+        }
+        if (identity.providerType === 'Facebook') {
+          const picObj = JSON.parse(curUser.attributes.picture);
+          _user.picture = picObj.data.url;
+        }
+      }
+      console.log('_user:', _user);
+      setUser(_user);
+    } catch (err) {
+      setUser(null);
+    }
+  };
+
   const signUp = async (username: string, email: string, password: string) => {
     await AmpAuth.signUp({ username, password, attributes: { email } });
   };
@@ -63,36 +87,27 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
     password: string
   ) => {
     await AmpAuth.confirmSignUp(username, authCode);
-    const curUser = await AmpAuth.signIn(username, password);
-    setUser(curUser);
+    await AmpAuth.signIn(username, password);
+    await initiateUser();
   };
 
   const login = async (username: string, password: string) => {
-    const curUser = await AmpAuth.signIn(username, password);
-    curUser.id = curUser.username;
-    setUser(curUser);
+    await AmpAuth.signIn(username, password);
+    await initiateUser();
   };
 
   const loginWithGoogle = async () => {
     await AmpAuth.federatedSignIn({
       provider: CognitoHostedUIIdentityProvider.Google,
     });
-    const curUser = await AmpAuth.currentAuthenticatedUser();
-    curUser.id = curUser.username;
-    curUser.username = curUser.attributes.name || curUser.username;
-    console.log(curUser);
-    setUser(curUser);
+    await initiateUser();
   };
 
   const loginWithFacebook = async () => {
     await AmpAuth.federatedSignIn({
       provider: CognitoHostedUIIdentityProvider.Facebook,
     });
-    const curUser = await AmpAuth.currentAuthenticatedUser();
-    curUser.id = curUser.username;
-    curUser.username = curUser.attributes.name || curUser.username;
-    console.log(curUser);
-    setUser(curUser);
+    await initiateUser();
   };
 
   const logout = () => {
@@ -113,20 +128,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const curUser = await AmpAuth.currentAuthenticatedUser();
-        curUser.id = curUser.username;
-        if (curUser.attributes?.name) {
-          curUser.username = curUser.attributes.name;
-        }
-        console.log(curUser);
-        setUser(curUser);
-      } catch (err) {
-        setUser(null);
-      }
-    };
-    checkUser();
+    initiateUser();
   }, []);
 
   return (

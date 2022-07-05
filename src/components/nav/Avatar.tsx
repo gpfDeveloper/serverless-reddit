@@ -16,8 +16,8 @@ type Props = {
 const Avatar: FunctionComponent<Props> = ({ user }) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { logout } = useAuth();
-  const username = user!.attributes.name || user!.username;
-  const img = user!.attributes.picture || '/';
+  const username = user!.username;
+  const img = user!.picture;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
