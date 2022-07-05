@@ -70,7 +70,6 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }) => {
           _user.picture = picObj.data.url;
         }
       }
-      console.log('_user:', _user);
       setUser(_user);
     } catch (err) {
       setUser(null);

@@ -25,7 +25,6 @@ const Home: FunctionComponent = () => {
         query: listPosts,
         authMode: 'API_KEY',
       })) as { data: ListPostsQuery };
-      console.log(ret);
       for (const post of ret.data.listPosts!.items) {
         const postItem: PostItemProps = {
           id: post!.id,
@@ -41,6 +40,10 @@ const Home: FunctionComponent = () => {
         }
         _postItems.push(postItem);
       }
+      _postItems.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
       setPostItems(_postItems);
       setLoading(false);
     };

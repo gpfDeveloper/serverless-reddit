@@ -26,7 +26,6 @@ const Comment: FunctionComponent<Props> = ({ postId }) => {
   const [comment, setComment] = useState<string | undefined>('');
   const canSubmit = Boolean(comment && comment.trim().length > 0);
   const submitHandler = async () => {
-    console.log(comment);
     if (!user) navigate('/login');
     if (!canSubmit) return;
     setLoadingBtn(true);
