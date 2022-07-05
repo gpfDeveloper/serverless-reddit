@@ -62,9 +62,16 @@ const PostItem: FunctionComponent<Props> = ({
         </Typography>
         <Typography variant="h5">{title}</Typography>
         {img ? (
-          <Box sx={{ maxWidth: 600, height: isDetail ? '100%' : 420 }}>
-            <img src={img} alt={title} />
-          </Box>
+          <>
+            <Box sx={{ maxWidth: 600, height: isDetail ? '100%' : 420 }}>
+              <img src={img} alt={title} />
+            </Box>
+            {isDetail && content && (
+              <Box color="text.secondary">
+                <MDEditor.Markdown source={content} />
+              </Box>
+            )}
+          </>
         ) : (
           content && (
             <Box color="text.secondary">
