@@ -46,7 +46,7 @@ const ForgotPassword: FunctionComponent = () => {
   }) => {
     try {
       setLoading(true);
-      await forgotPassword(username);
+      await forgotPassword(username.replace(/ /g, '_'));
       setIsReset(true);
       setLoading(false);
     } catch (err: any) {
@@ -63,7 +63,7 @@ const ForgotPassword: FunctionComponent = () => {
   }) => {
     try {
       setLoading(true);
-      await resetPassword(username, authCode, password);
+      await resetPassword(username.replace(/ /g, '_'), authCode, password);
       setLoading(false);
       navigate('/login');
     } catch (err: any) {

@@ -35,7 +35,7 @@ const Login: FunctionComponent = () => {
   }) => {
     try {
       setLoading(true);
-      await login(username, password);
+      await login(username.replace(/ /g, '_'), password);
       setLoading(false);
     } catch (err: any) {
       const msg = err?.message || 'Incorrect username or password.';

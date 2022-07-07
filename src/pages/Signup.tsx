@@ -39,7 +39,7 @@ const Signup: FunctionComponent = () => {
   }) => {
     try {
       setLoading(true);
-      await signUp(username, email, password);
+      await signUp(username.replace(/ /g, '_'), email, password);
       setIsConfirm(true);
       setLoading(false);
     } catch (err: any) {
@@ -57,7 +57,7 @@ const Signup: FunctionComponent = () => {
   }) => {
     try {
       setLoading(true);
-      await confirmSignUp(username, authCode, password);
+      await confirmSignUp(username.replace(/ /g, '_'), authCode, password);
       setLoading(false);
     } catch (err: any) {
       const msg =
