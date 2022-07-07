@@ -25,13 +25,13 @@ const Logo: FunctionComponent = () => {
           noWrap
           sx={{
             mr: 2,
-            fontFamily: 'monospace',
+            fontFamily: '"Oswald", sans-serif;',
             fontWeight: 700,
             color: 'inherit',
             textDecoration: 'none',
           }}
         >
-          Reddit
+          Serverless Reddit
         </Typography>
       </Box>
     </Link>
