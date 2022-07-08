@@ -55,7 +55,7 @@ const Nav: FunctionComponent = () => {
               size="small"
               onClick={loginHandler}
             >
-              Log In or Sign Up
+              Log In
             </Button>
           )}
         </Toolbar>
